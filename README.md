@@ -1,2 +1,20 @@
 # ReactNativeQJS
-基于redux管理的项目
+    该工程引入了以下第三方js库:
+    "immutable": "^3.8.2",
+    "lodash": "^4.17.4",
+    "mockjs": "^1.0.1-beta3",
+    "query-string": "^5.0.1",
+    "react": "16.0.0",
+    "react-native": "0.50.3",
+    "react-native-button": "^2.1.0",
+    "react-native-communications": "^2.2.1",
+    "react-native-image-picker": "^0.26.7",
+    "react-native-modalbox": "^1.4.2",
+    "react-native-root-toast": "^2.2.0",
+    "react-native-splash-screen": "^3.0.6",
+    "react-native-storage": "^0.2.2",
+    "react-native-swiper": "^1.5.13",
+    "react-navigation": "^1.0.0-beta.19",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0"
