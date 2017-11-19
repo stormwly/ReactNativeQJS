@@ -10,7 +10,6 @@ import {
 import Global from '../common/Global'
 import TabOptions from './TabOptions'
 import StackOptions from './StackOptions'
-import LaunchPage from '../page/LaunchPage'
 import HomePage from '../page/HomePage'
 import FinancePage from '../page/FinancePage'
 import DiscoverPage from '../page/DiscoverPage'
@@ -79,12 +78,6 @@ const Tab = TabNavigator({
  */
 export default Routers = StackNavigator({
     //默认加载第一个界面,这里用来注册要跳转的界面,类似于android中的Manifest.xml文件
-    Launch: {
-        screen: LaunchPage,
-        navigationOptions:{
-            header:null
-        }
-    },
     Tab: {
         screen: Tab
     },

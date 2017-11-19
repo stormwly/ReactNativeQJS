@@ -17,6 +17,7 @@ export default class HomeListComponent extends Component {
 
     render() {
         return <View style={styles.container}>
+
             <AnimatedFlatList
                 style={{flex: 1}}
                 ItemSeparatorComponent={()=>SeparatorLine()}
@@ -33,9 +34,14 @@ export default class HomeListComponent extends Component {
     _keyExtractor = (item, index) => item.id;
 
     shouldComponentUpdate(nextProps, nextState) {
+        console.log('shouldComponentUpdate')
         let flag1 = !(this.props === nextProps || Immutable.is(this.props, nextProps));
         let flag2 = !(this.state === nextState || Immutable.is(this.state, nextState));
         return flag1 || flag2;
+    }
+
+    componentDidMount() {
+        console.log('HomeListComponent')
     }
 
 //列表为空时渲染该组件

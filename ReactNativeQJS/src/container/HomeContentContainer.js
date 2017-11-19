@@ -47,11 +47,18 @@ class HomeContentComponent extends Component {
     };
 
     render(){
-        if(this.props.isLoading&&!this.props.isRefreshing){
-            return <LoadingView isOpen={this.props.isLoading}/>
-        }else {
+        // console.log('this.props.isLoading',this.props.isLoading)
+        // console.log('this.props.isRefreshing',this.props.isRefreshing)
+        // if(this.props.isLoading){
+        //     return <LoadingView isOpen={this.props.isLoading}/>
+        // }else {
           return this.renderContent();
-        }
+        // }
+
+    }
+
+    componentDidMount() {
+        console.log('HomeContentComponent---componentDidMount')
     }
 
     renderContent() {
