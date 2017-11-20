@@ -6,6 +6,7 @@ export default{
     //启动页
     LAUNCH_IMG:require('../../res/images/launch_screen.png'),
     DEFAULT_BANNER:require('../../res/images/default_banner.png'),
+    NOTICE_ICON:require('../../res/images/notice_icon.png'),
 
 
     //tab bar icon

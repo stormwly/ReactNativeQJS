@@ -14,6 +14,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         getHomeNotice: () => {
             dispatch(HomeNoticeAction.getHomeNotice());
+        },
+        clearTime:()=>{
+            HomeNoticeAction.clearTime();
         }
     };
 }

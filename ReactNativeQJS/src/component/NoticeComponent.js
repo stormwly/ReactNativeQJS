@@ -10,7 +10,7 @@ export default class NoticeComponent extends Component {
         let {noticeContent} = this.props;
         let textView = noticeContent ? <Text style={styles.text}>{noticeContent}</Text> : null;
         return <View style={styles.container}>
-            <Image style={styles.img} source={require('../../res/images/notice_icon.png')} resizeMode={'center'}/>
+            <Image style={styles.img} source={ConstantData.NOTICE_ICON} resizeMode={'center'}/>
             {textView}
         </View>
     }
@@ -18,6 +18,11 @@ export default class NoticeComponent extends Component {
     componentDidMount() {
         const {getHomeNotice} = this.props;
         getHomeNotice();
+    }
+
+    componentWillUnmount() {
+        const {clearTime} = this.props;
+        clearTime();
     }
 }
 

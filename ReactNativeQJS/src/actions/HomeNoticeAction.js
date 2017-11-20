@@ -1,11 +1,14 @@
 'use strict'
 import * as ActionTypes from '../contants/ActionTypes'
 import RepositoryUtils from '../common/storage/RepositoryUtils'
+
 let index = 0;
+var interval;
+let isTimeInterval=true;
 export const getHomeNotice = () => {
     return dispatch => {
         RepositoryUtils.init().getDataByKey(StorageKeys.homeNoticeDesc).then(response => {
-            setInterval(() => {
+            interval = setInterval(() => {
                 updateData(response, dispatch)
             }, 3000);
         }).catch(err => {
@@ -13,7 +16,10 @@ export const getHomeNotice = () => {
             dispatch(getHomeNoticeFail(err.message));
         });
     }
+}
 
+export const clearTime = () => {
+    isTimeInterval=false;
 }
 
 let updateData = (response, dispatch) => {
@@ -23,6 +29,10 @@ let updateData = (response, dispatch) => {
     if (noticeModel) {
         dispatch(getHomeNoticeSuccess(noticeModel.noticeContent));
     }
+    if(!isTimeInterval){
+        interval&&clearInterval(interval)
+    }
+
 }
 
 
