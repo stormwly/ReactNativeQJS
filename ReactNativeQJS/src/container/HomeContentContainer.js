@@ -14,7 +14,6 @@ import {toastShort} from "../common/ToastUtils"
 import HomeListComponent from '../component/HomeListComponent'
 import {connect} from 'react-redux'
 import * as HomeListAction from '../actions/HomeListAction'
-import LoadingView from '../component/LoadingView'
 
 class HomeContentComponent extends Component {
 
@@ -46,22 +45,7 @@ class HomeContentComponent extends Component {
         }
     };
 
-    render(){
-        // console.log('this.props.isLoading',this.props.isLoading)
-        // console.log('this.props.isRefreshing',this.props.isRefreshing)
-        // if(this.props.isLoading){
-        //     return <LoadingView isOpen={this.props.isLoading}/>
-        // }else {
-          return this.renderContent();
-        // }
-
-    }
-
-    componentDidMount() {
-        console.log('HomeContentComponent---componentDidMount')
-    }
-
-    renderContent() {
+    render() {
         return <ScrollView contentContainerStyle={styles.container}
                            horizontal={false}
                            showsVerticalScrollIndicator={false}
