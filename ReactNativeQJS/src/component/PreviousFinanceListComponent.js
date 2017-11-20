@@ -10,6 +10,8 @@ import {
 } from 'react-native'
 import FinanceListItemView from './FinanceListItemView'
 import SeparatorLine from './SeparatorLine'
+import CircleProgress from './CircleProgress'
+import LoadingView from './LoadingView'
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 var pageIndex = 0;
@@ -19,8 +21,8 @@ export default class PreviousFinanceListComponent extends PureComponent {
     render() {
         return (<View style={styles.container}>
             <AnimatedFlatList
-                ListFooterComponent={this.props.hasMore ? null : this.ListFootComponent()}
-                ItemSeparatorComponent={()=>SeparatorLine()}
+                ListFooterComponent={this.ListFootComponent()}
+                ItemSeparatorComponent={() => SeparatorLine()}
                 ListEmptyComponent={this.ListEmptyComponent}
                 renderItem={this.renderItemView}
                 onRefresh={() => this.refresh()}
@@ -55,8 +57,8 @@ export default class PreviousFinanceListComponent extends PureComponent {
     }
 
     loadNetData(pageIndex, isRefreshing, isLoadMore) {
-        let {getNetFinanceList,financeList,hasMore} = this.props;
-        getNetFinanceList(financeList, pageIndex, isRefreshing, isLoadMore,hasMore);
+        let {getNetFinanceList, financeList, hasMore} = this.props;
+        getNetFinanceList(financeList, pageIndex, isRefreshing, isLoadMore, hasMore);
     }
 
     //列表为空时渲染该组件
@@ -66,11 +68,18 @@ export default class PreviousFinanceListComponent extends PureComponent {
         </View>
     }
 
-//列表的foot组件
+    //列表的foot组件
     ListFootComponent() {
-        return <View style={styles.footerComponentStyle}>
-            <Text style={styles.footerTextStyle}>没有更多数据了!</Text>
-        </View>
+        if (this.props.hasMore) {
+            return <View style={styles.footerComponentStyle}>
+                {CircleProgress()}
+            </View>
+        } else {
+            return <View style={styles.footerComponentStyle}>
+                <Text style={styles.footerTextStyle}>没有更多数据了!</Text>
+            </View>
+        }
+
     }
 
     onPressItem(item) {

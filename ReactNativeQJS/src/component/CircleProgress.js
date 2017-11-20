@@ -5,24 +5,34 @@ import React from 'react';
 import {
     StyleSheet,
     View,
-    Platform,
+    Text,
     ActivityIndicator
 } from 'react-native';
 
 let CircleProgress = () => {
-    return <ActivityIndicator animating={true}
-                       color='white'
-                       style={styles.centering}
-                       size='small'/>
+    return <View style={styles.container}>
+        <ActivityIndicator animating={true}
+                           color={Colors.gray}
+                           style={styles.centering}
+                           size='small'/>
+        <Text style={styles.text}>加载中...</Text>
+    </View>
+
 }
 
 const styles = StyleSheet.create({
-    container: {},
+    container: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     centering: {
         alignItems: 'center',
         justifyContent: 'center',
-        height: 40,
-        width: 40
+    },
+    text:{
+        fontSize:14,
+        color:Colors.gray,
+        marginTop:2
     }
 
 });
