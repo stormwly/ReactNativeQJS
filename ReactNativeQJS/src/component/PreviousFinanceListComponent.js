@@ -4,6 +4,7 @@ import {
     FlatList,
     StyleSheet,
     TouchableOpacity,
+    BackHandler,
     View,
     Text,
     Animated
@@ -11,7 +12,6 @@ import {
 import FinanceListItemView from './FinanceListItemView'
 import SeparatorLine from './SeparatorLine'
 import CircleProgress from './CircleProgress'
-import LoadingView from './LoadingView'
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 var pageIndex = 0;
@@ -47,7 +47,20 @@ export default class PreviousFinanceListComponent extends PureComponent {
         }
     }
 
+    componentWillUnmount() {
+        BackHandler.addEventListener('hardwareBackPress', this._onBackAndroid);
+    }
+
+    _onBackAndroid = () => {
+        const {routes} =this.props;
+        if (routes.length > 1) {
+            this.props.navigation.goBack();
+            return true;
+        }
+    }
+
     componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this._onBackAndroid);
         this.refresh();
     }
 
@@ -70,13 +83,13 @@ export default class PreviousFinanceListComponent extends PureComponent {
 
     //列表的foot组件
     ListFootComponent() {
-        if (this.props.hasMore) {
+        if (this.props.hasMore&&!this.props.errInfo) {
             return <View style={styles.footerComponentStyle}>
                 {CircleProgress()}
             </View>
         } else {
             return <View style={styles.footerComponentStyle}>
-                <Text style={styles.footerTextStyle}>没有更多数据了!</Text>
+                <Text style={styles.footerTextStyle}>{this.props.errInfo}?出错了:没有更多数据了!</Text>
             </View>
         }
 

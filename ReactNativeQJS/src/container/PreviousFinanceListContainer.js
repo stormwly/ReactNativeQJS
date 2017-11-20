@@ -2,20 +2,24 @@ import PreviousFinanceListComponent from '../component/PreviousFinanceListCompon
 import {connect} from 'react-redux'
 import * as PreviousFinanceListAction from '../actions/PreviousFinanceListAction'
 
-const mapStateToProps = (state) => {
-   let {financeList,errInfo,isRefreshing,hasMore}=state.previousFinanceList;
+const mapStateToProps = (state, ownProps) => {
+    let routes = state.nav.routes;
+    let {navigation} = ownProps;
+    let {financeList, errInfo, isRefreshing, hasMore} = state.previousFinanceList;
     return {
-        financeList:financeList,
+        financeList: financeList,
         errInfo: errInfo,
-        isRefreshing:isRefreshing,
-        hasMore:hasMore
+        isRefreshing: isRefreshing,
+        hasMore: hasMore,
+        routes,
+        navigation
     }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        getNetFinanceList: (financeList,pageIndex,isRefreshing,isLoadMore,hasMore) => {
-            dispatch(PreviousFinanceListAction.getNetPreviousFinanceList(financeList,pageIndex,isRefreshing,isLoadMore,hasMore));
+        getNetFinanceList: (financeList, pageIndex, isRefreshing, isLoadMore, hasMore) => {
+            dispatch(PreviousFinanceListAction.getNetPreviousFinanceList(financeList, pageIndex, isRefreshing, isLoadMore, hasMore));
         }
     };
 }

@@ -4,6 +4,6 @@ import PreviousFinanceListContainer from '../container/PreviousFinanceListContai
 
 export default class PreviousFinancePage extends Component {
     render() {
-        return (<PreviousFinanceListContainer/>)
+        return (<PreviousFinanceListContainer navigation={this.props.navigation}/>)
     }
 }
