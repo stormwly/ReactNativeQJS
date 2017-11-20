@@ -101,7 +101,8 @@ const styles = StyleSheet.create({
     footerComponentStyle: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 3
+        marginTop: 5,
+        marginBottom:5
     },
     footerTextStyle: {
         fontSize: 14,

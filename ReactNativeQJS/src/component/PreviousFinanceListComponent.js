@@ -30,10 +30,10 @@ export default class PreviousFinanceListComponent extends PureComponent {
                 horizontal={false}
                 extraData={this.state}
                 legacyImplementation={false}
-                onEndReachedThreshold={1}
+                onEndReachedThreshold={0.5}
                 onEndReached={() => this.onEndReached()}
                 keyExtractor={(item, index) => item.id}
-                initialNumToRender={5}
+                initialNumToRender={10}
                 removeClippedSubviews={false}
                 data={this.props.financeList}/>
         </View>)
