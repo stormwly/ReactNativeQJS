@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux'
 
-var HEADER = '#3b5998';
 var BGWASH = 'rgba(255,255,255,0.8)';
 var DISABLED_WASH = 'rgba(255,255,255,0.25)';
 
@@ -145,7 +144,7 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-        backgroundColor: HEADER
+        backgroundColor: Colors.white
     },
 
     topBar: {
@@ -197,7 +196,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
     webView: {
-        backgroundColor: BGWASH,
+        backgroundColor: Colors.white,
     },
     statusBar: {
         flexDirection: 'row',
