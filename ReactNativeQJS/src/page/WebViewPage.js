@@ -5,8 +5,10 @@ import {
     TouchableOpacity,
     TextInput,
     Text,
-    StyleSheet
+    StyleSheet,
+    BackHandler
 } from 'react-native';
+import {connect} from 'react-redux'
 
 var HEADER = '#3b5998';
 var BGWASH = 'rgba(255,255,255,0.8)';
@@ -17,12 +19,25 @@ var TEXT_INPUT_REF = 'textInput';
 var inputText = null;
 
 
-export default class WebViewPage extends Component {
+ class WebViewPage extends Component {
+
+    componentWillUnmount() {
+        BackHandler.addEventListener('hardwareBackPress', this._onBackAndroid);
+    }
+
+    _onBackAndroid = () => {
+        const {routes} =this.props;
+        if (routes.length > 1) {
+            this.props.navigation.goBack();
+            return true;
+        }
+    }
+
 
     componentDidMount() {
-        console.log(this.props.navigation)
+        BackHandler.addEventListener('hardwareBackPress', this._onBackAndroid);
         this.props.navigation.setParams({
-            title:this.props.navigation.state.params.title,
+            title: this.props.navigation.state.params.title,
         })
     }
 
@@ -46,7 +61,6 @@ export default class WebViewPage extends Component {
 
 
     render() {
-        console.log('render')
         inputText = this.state.url;
         return <View style={styles.container}>
             <View style={styles.topBar}>
@@ -86,7 +100,7 @@ export default class WebViewPage extends Component {
                 scalesPageToFit={this.state.scalesPageToFit}/>
 
             {/*<View style={styles.statusBar}>*/}
-                {/*<Text style={styles.statusBarText}>{this.state.status}</Text>*/}
+            {/*<Text style={styles.statusBarText}>{this.state.status}</Text>*/}
             {/*</View>*/}
         </View>
 
@@ -123,6 +137,8 @@ export default class WebViewPage extends Component {
     _onShouldStartLoadWithRequest = (event) => {
         return true
     }
+
+
 }
 
 const styles = StyleSheet.create({
@@ -194,3 +210,10 @@ const styles = StyleSheet.create({
         fontSize: 13,
     },
 })
+
+export default connect((state) => {
+    const routes  = state.nav.routes;
+    return {
+        routes
+    };
+})(WebViewPage)

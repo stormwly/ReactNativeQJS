@@ -6,7 +6,6 @@ import Button from 'react-native-button'
 import ThemeStyles from '../../res/styles/ThemeStyles'
 
 const StackOptions = ({navigation}) => {
-    console.log(navigation)
     let {state, goBack} = navigation
     //用来控制是否显示header
     let header

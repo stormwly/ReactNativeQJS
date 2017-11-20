@@ -48,7 +48,6 @@ export default class HomeBannerComponent extends Component {
     }
 
     jumpToWeb = (item) => {
-        console.log(this.props)
         this.props.navigation.navigate('WebView', {title: item.bannerTitle, url: item.bannerUrl})
     }
 }
