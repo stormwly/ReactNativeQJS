@@ -22,7 +22,7 @@ global.SCREEN_HEIGHT = height;
 // 获取屏幕分辨率
 global.PixelRatio = PixelRatio.get();
 // 最小线宽
-global.pixel = 1 / PixelRatio;
+global.Pixel = 1 / PixelRatio;
 // 常用颜色
 global.Colors = Colors;
 // 适配字体

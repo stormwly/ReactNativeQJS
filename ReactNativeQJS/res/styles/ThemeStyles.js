@@ -11,13 +11,13 @@ const ThemeStyles=StyleSheet.create({
         backgroundColor:Colors.white,
     },
     headerTitleStyle:{
-        fontSize:14,
+        fontSize:FONT_SIZE(14),
         color:Colors.headTitleColor,
         alignSelf:'center',
     },
 
     headerRightStyle:{
-        fontSize:16,
+        fontSize:FONT_SIZE(16),
         color:Colors.headTitleColor,
         alignSelf:'center',
     }

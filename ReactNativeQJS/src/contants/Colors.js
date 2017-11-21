@@ -12,5 +12,10 @@ export default{
     splitLineColor: '#e6e6e6',
     financeItemLineColor: '#e3e1e1',
     //界面的背景颜色
-    bgColor:'#e6e6e6'
+    bgColor:'#e6e6e6',
+
+    textColorHint:'#CCCCCC',
+    textColor:'#333333',
+    bottomColor:'#e6e6e6'
+
 }
