@@ -46,5 +46,14 @@ export default{
     MINE_RATE_COUPON_ICON:require('../../res/images/mine_ratecoupon_icon.png'),
     MINE_CASH_COUPON_ICON:require('../../res/images/mine_cashcoupon_icon.png'),
 
+    //登录
+    ICON_PHONE_LOGIN:require('../../res/images/icon_phone_login.png'),
+    ICON_PASS_LOGIN:require('../../res/images/icon_pass_login.png'),
+    ICON_LOGIN_LOGO:require('../../res/images/icon_login_logo.png'),
+    ICON_OPEN_PASS_LOGIN:require('../../res/images/icon_openpass_login.png'),
+    ICON_CLOSE_PASS_LOGIN:require('../../res/images/icon_closepass_login.png'),
+    ICON_SETTING_LOGIN:require('../../res/images/icon_setting_login.png'),
+
+
 }
 

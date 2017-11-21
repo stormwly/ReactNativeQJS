@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import * as FinanceListAction from '../actions/FinanceListAction'
 
 const mapStateToProps = (state,ownProps) => {
-   let {financeList,errInfo,isRefreshing}=state.financeList;
+    let {financeList,errInfo,isRefreshing}=state.financeList;
     return {
         financeList:financeList,
         errInfo: errInfo,

@@ -16,6 +16,8 @@ import DiscoverPage from '../page/DiscoverPage'
 import MinePage from '../page/MinePage'
 import WebViewPage from '../page/WebViewPage'
 import PreviousFinancePage from '../page/PreviousFinancePage'
+import LoginPage from '../page/LoginPage'
+import LoginOptions from "./LoginOptions";
 
 //底部导航相关
 const Tab = TabNavigator({
@@ -43,6 +45,10 @@ const Tab = TabNavigator({
     animationEnabled: false,
     //是否允许在标签之间进行滑动
     swipeEnabled: false,
+    //是否懒加载页面
+    lazy:true,
+    //初始显示的Tab对应的页面路由名称
+    initialRouteName:'Home',
     //按 back 键是否跳转到第一个Tab(首页)， none 为不跳转
     backBehavior: "none",
     //设置Tab标签的属性
@@ -56,8 +62,11 @@ const Tab = TabNavigator({
         showLabel: true,//是否显示label，默认开启
         activeTintColor: 'red',//label和icon的前景色 活跃状态下（选中）
         inactiveTintColor: 'gray',//label和icon的前景色 活跃状态下（未选中）
-        style: { //TabNavigator 的背景颜色
-            backgroundColor: 'white',
+        style: {//TabNavigator样式
+            backgroundColor:Colors.white,
+            paddingBottom: 0,
+            borderTopWidth: 0.5,
+            borderTopColor:Colors.splitLineColor,
             height:Platform.OS==="ios"?44:55,
         },
         indicatorStyle: {//标签指示器的样式对象（选项卡底部的行）。安卓底部会多出一条线，可以将height设置为0来暂时解决这个问题
@@ -65,7 +74,7 @@ const Tab = TabNavigator({
         },
         labelStyle: {//文字的样式
             fontSize: 12,
-            marginBottom:1
+            margin:0
         },
         iconStyle: {//图标的样式
             // marginBottom:5,
@@ -74,9 +83,14 @@ const Tab = TabNavigator({
     },
 });
 /*
- *初始化StackNavigator
+ *初始化StackNavigator，
+ * RouteConfigs 参数表示各个页面路由配置，
+ * 类似于android原生开发中的 AndroidManifest.xml ，
+ * 它是让导航器知道需要导航的路由对应的页面
+ * Tab,WebView,PreviousFinance 为路由名称,screen 属性值Tab,WebViewPage,
+ * PreviousFinance 为对应路由的页面
  */
-export default Routers = StackNavigator({
+export default RouteConfigs = StackNavigator({
     //默认加载第一个界面,这里用来注册要跳转的界面,类似于android中的Manifest.xml文件
     Tab: {
         screen: Tab
@@ -89,5 +103,10 @@ export default Routers = StackNavigator({
         screen:PreviousFinancePage,
         navigationOptions:({navigation})=>StackOptions({navigation})
     },
+    Login:{
+        screen:LoginPage,
+        navigationOptions:({navigation})=>LoginOptions({navigation})
+    },
+
 },)
 

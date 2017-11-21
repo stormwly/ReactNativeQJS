@@ -8,7 +8,6 @@ import {toastShort} from "../common/ToastUtils"
 let lastClickTime = 0;
 
 class HomePage extends Component {
-
     componentWillUnmount() {
         BackHandler.addEventListener('hardwareBackPress', this._onBackAndroid);
     }
@@ -18,6 +17,7 @@ class HomePage extends Component {
     }
 
     _onBackAndroid = () => {
+        console.log('HomePage---',this.props)
         let {routes} = this.props;
         var now = new Date().getTime();
         if (routes && routes.length === 1) {

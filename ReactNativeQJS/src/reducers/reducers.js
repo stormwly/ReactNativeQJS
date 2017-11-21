@@ -5,6 +5,7 @@ import homeList from './homeListReducers'
 import financeList from './financeListReducers'
 import previousFinanceList from './previousFinanceListReducers'
 import account from './accountInfoReducers'
+import login from './loginReducers'
 
 const reducers = {
     nav,
@@ -13,7 +14,8 @@ const reducers = {
     homeList,
     financeList,
     previousFinanceList,
-    account
+    account,
+    login
 }
 
 export default reducers;

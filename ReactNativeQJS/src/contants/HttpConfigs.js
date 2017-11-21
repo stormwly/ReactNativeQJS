@@ -10,6 +10,7 @@
         previous_invest_list:'finance/getPreviousFinanceList',//获取往期理财项目列表数据
         getAccountInfo:'user/getAccountInfo',//获取用户账户中心数据
         home_getNotices:'home/getNotices',//获取首页中的最新公告
+        user_login:'user/login',//登录
     },
 
     //基础请求参数
