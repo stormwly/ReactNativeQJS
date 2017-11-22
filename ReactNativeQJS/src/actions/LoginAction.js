@@ -27,8 +27,27 @@ export const login= (phoneNum,password) => {
             dispatch(loginFail(err));
         });
     }
+}
 
+export const getValidPhone=(validPhone)=>{
+    return {
+        type:ActionTypes.GET_LOGIN_VALID_PHONE,
+        validPhone
+    }
+}
 
+export const getValidPwd=(validPwd)=>{
+    return {
+        type:ActionTypes.GET_LOGIN_VALID_PWD,
+        validPwd
+    }
+}
+
+export const isShowLoginPassWord=(isShowPwd)=>{
+    return {
+        type:ActionTypes.IS_SHOW_LOGIN_PASS_WORD,
+        isShowPwd
+    }
 }
 
 let loginStart = () => {
