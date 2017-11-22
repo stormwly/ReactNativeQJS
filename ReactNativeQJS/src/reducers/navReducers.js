@@ -14,16 +14,17 @@ const navReducers = (state, action) => {
         }, 400);
         if(action.routeName==='Mine'){
             let hasToken=false;
-            console.log('jump login')
             RepositoryUtils.init().getDataByKey(StorageKeys.userToken).then(response => {
                 if(response){
                     hasToken=true;
                 }
                 console.log('获取token',response)
             }).catch(err => {
-                console.log(err)
+                // console.log(err)
                 hasToken=false;
+                console.log('获取token失败')
             });
+            console.log('开始执行-------------------------')
             if(!hasToken){
                 return Routers.router.getStateForAction(
                     NavigationActions.navigate({ routeName:'Login'}), {...state,from:action.routeName}

@@ -1,6 +1,7 @@
 'use strict'
 import * as ActionTypes from '../contants/ActionTypes'
 import {toastShort} from "../common/ToastUtils"
+import RepositoryUtils from '../common/storage/RepositoryUtils'
 
 export const login = (phoneNum, password) => {
     return dispatch => {
@@ -14,7 +15,9 @@ export const login = (phoneNum, password) => {
                 if (response) {
                     if (response.code === 0) {
                         toastShort('登录成功');
+                        RepositoryUtils.init().saveDataByKey(StorageKeys.userToken,response.data.userToken);
                         dispatch(loginSuccess(response.data));
+
                     } else {
                         dispatch(loginFail(response.message));
                         toastShort('登录失败');
