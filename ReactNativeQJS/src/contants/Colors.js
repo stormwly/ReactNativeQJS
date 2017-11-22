@@ -4,6 +4,7 @@ export default{
     red: '#FF644C',
     gray: '#aaaaaa',
     yellow:'#ffc125',
+    blue:'#23238E',
 
     //首页字体颜色
     headTitleColor: '#333333',

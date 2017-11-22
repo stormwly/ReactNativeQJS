@@ -4,15 +4,34 @@ import {
     StyleSheet,
     Image,
     BackHandler,
-    Text
+    Text,
+    Keyboard
 } from 'react-native'
 import CustomTextInput from './CustomTextInput'
 import Button from 'react-native-button'
+import LoadingView from './LoadingView'
 export default class LoginComponent extends Component {
+
+    componentWillMount () {
+        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+    }
+
 
     componentWillUnmount() {
         BackHandler.addEventListener('hardwareBackPress', this._onBackAndroid);
+        this.keyboardDidShowListener.remove();
+        this.keyboardDidHideListener.remove();
     }
+
+    _keyboardDidShow () {
+        console.log('Keyboard Shown');
+    }
+
+    _keyboardDidHide () {
+        console.log('Keyboard Hidden');
+    }
+
 
     _onBackAndroid = () => {
         const {routes} = this.props;
@@ -40,8 +59,8 @@ export default class LoginComponent extends Component {
     }
 
     loginPress=()=>{
+        Keyboard.dismiss();
         let {login}=this.props;
-        console.log(this.props.validPhone,this.props.validPwd)
         login(this.props.validPhone,this.props.validPwd);
     }
 
@@ -66,6 +85,7 @@ export default class LoginComponent extends Component {
                 value={this.props.validPhone}
                 placeholderText="请输入手机号码"/>
             <CustomTextInput
+                keyboardType="numeric"
                 onChangeText={(text) => this.validPassWordInput(text)}
                 secureTextEntry={this.props.isShowPwd}
                 containerStyle={styles.containerStyle}
@@ -88,6 +108,7 @@ export default class LoginComponent extends Component {
                 style={styles.buttonTextStyle}>
                 登录
             </Button>
+            <LoadingView isOpen={this.props.isLoading}/>
         </View>
     }
 }

@@ -2,22 +2,26 @@
 import * as ActionTypes from '../contants/ActionTypes'
 import {toastShort} from "../common/ToastUtils"
 
-export const login= (phoneNum,password) => {
+export const login = (phoneNum, password) => {
     return dispatch => {
         dispatch(loginStart())
-        HttpUtils.get(HttpConfigs.api.user_login,{
-            phoneNum:phoneNum,
-            password:password
+        HttpUtils.get(HttpConfigs.api.user_login, {
+            phoneNum: phoneNum,
+            password: password
         }).then(response => {
+            console.log(response)
                 //请求成功
                 if (response) {
                     if (response.code === 0) {
+                        toastShort('登录成功');
                         dispatch(loginSuccess(response.data));
                     } else {
                         dispatch(loginFail(response.message));
+                        toastShort('登录失败');
                     }
                 } else {
                     dispatch(loginFail(response.message));
+                    toastShort('登录失败');
                 }
             }
         ).catch(err => {
@@ -29,23 +33,23 @@ export const login= (phoneNum,password) => {
     }
 }
 
-export const getValidPhone=(validPhone)=>{
+export const getValidPhone = (validPhone) => {
     return {
-        type:ActionTypes.GET_LOGIN_VALID_PHONE,
+        type: ActionTypes.GET_LOGIN_VALID_PHONE,
         validPhone
     }
 }
 
-export const getValidPwd=(validPwd)=>{
+export const getValidPwd = (validPwd) => {
     return {
-        type:ActionTypes.GET_LOGIN_VALID_PWD,
+        type: ActionTypes.GET_LOGIN_VALID_PWD,
         validPwd
     }
 }
 
-export const isShowLoginPassWord=(isShowPwd)=>{
+export const isShowLoginPassWord = (isShowPwd) => {
     return {
-        type:ActionTypes.IS_SHOW_LOGIN_PASS_WORD,
+        type: ActionTypes.IS_SHOW_LOGIN_PASS_WORD,
         isShowPwd
     }
 }
@@ -59,7 +63,7 @@ let loginStart = () => {
 let loginSuccess = (response) => {
     return {
         type: ActionTypes.LOGIN_SUCCESS,
-        userData:response
+        userData: response
     }
 }
 

@@ -30,12 +30,12 @@ export default class LoadingView extends Component {
                 isOpen={this.props.isOpen || false}
                 //backdropOpacity={.3}
                 backdropPressToClose={false}
-                animationDuration={10}>
+                animationDuration={0}>
                 <View>
                     <ActivityIndicator
                         animating={true}
                         style={styles.centering}
-                        color={Colors.red}
+                        color={Colors.blue}
                         size="large"/>
                     <Text style={styles.text}>加载中...</Text>
                 </View>
@@ -54,13 +54,13 @@ const styles = StyleSheet.create({
         flexDirection: 'column'
     },
     text:{
-      fontSize:15,
+      fontSize:FONT_SIZE(14),
       color:Colors.gray
     },
     centering: {
         alignItems: 'center',
         justifyContent: 'center',
         padding: 8,
-        height: 80,
+        height:120,
     },
 });
