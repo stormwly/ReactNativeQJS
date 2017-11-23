@@ -6,7 +6,7 @@ const initState = {
     isShowPwd:false,
     userData:null,
     isLoading: false,
-    errInfo: null
+    errInfo: null,
 }
 
 export default function LoginReducers(state = initState, action) {

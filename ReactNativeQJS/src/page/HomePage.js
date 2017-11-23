@@ -17,7 +17,6 @@ class HomePage extends Component {
     }
 
     _onBackAndroid = () => {
-        console.log('HomePage---',this.props)
         let {routes} = this.props;
         var now = new Date().getTime();
         if (routes && routes.length === 1) {

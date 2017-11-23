@@ -13,7 +13,7 @@ let RNSync = {
                 if (response) {
                     if (response.code === 0) {
                         resolve && resolve(response.data);
-                        RepositoryUtils.init().saveDataByKey(StorageKeys.homeFinanceList, response.data);
+                        RepositoryUtils.init().saveCacheDataByKey(StorageKeys.homeFinanceList, response.data);
                     } else {
                         reject && reject(new Error(response.message))
                     }
@@ -40,7 +40,7 @@ let RNSync = {
                 if (response) {
                     if (response.code === 0) {
                         resolve && resolve(response.data);
-                        RepositoryUtils.init().saveDataByKey(StorageKeys.homeBanner, response.data);
+                        RepositoryUtils.init().saveCacheDataByKey(StorageKeys.homeBanner, response.data);
                     } else {
                         reject && reject(new Error(response.message))
                     }
@@ -65,7 +65,7 @@ let RNSync = {
                 if (response) {
                     if (response.code === 0) {
                         resolve && resolve(response.data);
-                        RepositoryUtils.init().saveDataByKey(StorageKeys.homeNoticeDesc, response.data);
+                        RepositoryUtils.init().saveCacheDataByKey(StorageKeys.homeNoticeDesc, response.data);
                     } else {
                         reject && reject(new Error(response.message))
                     }

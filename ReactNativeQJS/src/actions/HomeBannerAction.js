@@ -5,7 +5,7 @@ import RepositoryUtils from '../common/storage/RepositoryUtils'
 export const getHomeBanner = () => {
 
     return dispatch => {
-        RepositoryUtils.init().getDataByKey(StorageKeys.homeBanner).then(response => {
+        RepositoryUtils.init().getCacheDataByKey(StorageKeys.homeBanner).then(response => {
             dispatch(getHomeBannerSuccess(response));
         }).catch(err => {
             console.log(err)

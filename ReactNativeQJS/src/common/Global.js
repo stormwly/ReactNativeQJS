@@ -27,8 +27,8 @@ global.Pixel = 1 / PixelRatio;
 global.Colors = Colors;
 // 适配字体
 global.FONT_SIZE = FontSize;
-// 用户登录状态
-global.TOKEN = false;
+//用户本地存储token
+global.UserToken =null;
 // 网络请求
 global.HttpUtils = HttpUtils;
 //http请求地址参数

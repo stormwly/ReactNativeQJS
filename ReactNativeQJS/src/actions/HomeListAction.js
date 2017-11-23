@@ -6,7 +6,7 @@ import {toastShort} from "../common/ToastUtils"
 export const getHomeList = () => {
     return dispatch => {
         dispatch(getHomeListStart(false))
-        RepositoryUtils.init().getDataByKey(StorageKeys.homeFinanceList).then(response => {
+        RepositoryUtils.init().getCacheDataByKey(StorageKeys.homeFinanceList).then(response => {
             dispatch(getHomeListSuccess(response));
         }).catch(err => {
             console.log(err)
@@ -24,7 +24,7 @@ export const getNetHomeList = (financeList) => {
                 if (response) {
                     if (response.code === 0) {
                         dispatch(getHomeListSuccess(response.data));
-                        RepositoryUtils.init().saveDataByKey(StorageKeys.homeFinanceList, response.data);
+                        RepositoryUtils.init().saveCacheDataByKey(StorageKeys.homeFinanceList, response.data);
                     } else {
                         dispatch(getHomeListFail(response.message,financeList));
                     }

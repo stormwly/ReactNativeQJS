@@ -5,7 +5,6 @@ import * as TextUtils from '../common/TextUtils'
 import {toastShort} from "../common/ToastUtils"
 const mapStateToProps = (state, ownProps) => {
     let routes = state.nav.routes;
-    let from=state.nav.from;
     let {navigation} = ownProps;
     let {validPhone,validPwd,isShowPwd,userData, errInfo,isLoading} = state.login;
     return {
@@ -15,7 +14,6 @@ const mapStateToProps = (state, ownProps) => {
         validPhone,
         validPwd,
         isShowPwd,
-        from,
         routes,
         navigation
     }

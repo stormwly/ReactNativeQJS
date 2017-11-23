@@ -15,7 +15,8 @@ export const login = (phoneNum, password) => {
                 if (response) {
                     if (response.code === 0) {
                         toastShort('登录成功');
-                        RepositoryUtils.init().saveDataByKey(StorageKeys.userToken,response.data.userToken);
+                        GLOBAL.UserToken=response.data.userToken;
+                        RepositoryUtils.init().saveCacheDataNoExpiresByKey(StorageKeys.userToken,response.data.userToken);
                         dispatch(loginSuccess(response.data));
 
                     } else {

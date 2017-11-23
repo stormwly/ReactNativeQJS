@@ -69,10 +69,11 @@ export default class LoginComponent extends Component {
         isShowLoginPassWord(!this.props.isShowPwd)
     }
 
+
+
     componentDidUpdate() {
         if(this.props.userData){
-            console.log('componentDidUpdate---',this.props.userData,this.props.from)
-            this.props.navigation.navigate(this.props.from);
+            this.props.navigation.goBack();
         }
     }
 

@@ -7,7 +7,7 @@ var interval;
 let isTimeInterval=true;
 export const getHomeNotice = () => {
     return dispatch => {
-        RepositoryUtils.init().getDataByKey(StorageKeys.homeNoticeDesc).then(response => {
+        RepositoryUtils.init().getCacheDataByKey(StorageKeys.homeNoticeDesc).then(response => {
             interval = setInterval(() => {
                 updateData(response, dispatch)
             }, 3000);

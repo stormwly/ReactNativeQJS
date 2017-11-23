@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import * as AccountInfoAction from '../actions/AccountInfoAction'
 import MineGridItemModel from '../model/MineGridItemModel'
 import {toastShort} from "../common/ToastUtils"
+import UserManager from '../common/UserManager'
 import  ImagePicker from 'react-native-image-picker'; //第三方相机
 var photoOptions = {
     //底部弹出框选项
@@ -18,14 +19,20 @@ var photoOptions = {
         path:'images'
     }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = (state,ownProps) => {
+    // let {userData}=state.login;
+    let routes = state.nav.routes;
+    let {navigation} = ownProps;
     let {accountInfo, errInfo, isRefreshing,avatarSource} = state.account;
     return {
         accountInfo: accountInfo,
         errInfo: errInfo,
         isRefreshing: isRefreshing,
         gridItems: getItemsArray(),
-        avatarSource:avatarSource
+        avatarSource:avatarSource,
+        isLogin:UserManager.isLogin(),
+        navigation,
+        routes
     }
 }
 

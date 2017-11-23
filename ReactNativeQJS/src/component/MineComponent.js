@@ -39,51 +39,7 @@ export default class MineComponent extends Component {
                                    colors={['#ff0000', '#00ff00', '#0000ff']}
                                    progressBackgroundColor={Colors.white}/>
                            }>
-                <View style={styles.topViewStyle}>
-                    <Image source={ConstantData.MINE_ACCOUNT_BACKGROUND} style={styles.topBgStyle}/>
-                    <View>
-                        <View
-                            style={styles.topLine1Style}>
-                            <TouchableOpacity onPress={() => this._cameraAction()} activeOpacity={0.8}>
-                                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                    <Image
-                                        // source={headerPic ? {uri: headerPic} :ConstantData.MINE_HEAD_DEFAULT}
-                                        source={this.props.avatarSource ? this.props.avatarSource : ConstantData.MINE_HEAD_DEFAULT}
-                                        resizeMode={'cover'}
-                                        style={styles.headImgStyle}/>
-                                    <Text style={styles.nameTxtStyle}>{userName}</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <Image source={ConstantData.ICON_SETTING}
-                                   style={{width: 24, height: 24}}/>
-                        </View>
-                        <View style={styles.topLine2Style}>
-                            <Text style={styles.amountTxtStyle}>{amountMoney}</Text>
-                            <Text style={styles.amountDescTxtStyle}>资产总额(元)</Text>
-                        </View>
-                        <View style={styles.topLine3Style}>
-                            <Text style={styles.valTxtStyle}>{availableMoney}</Text>
-                            <Text style={styles.valDescTxtStyle}>可用余额(元)</Text>
-                        </View>
-                    </View>
-                    <View style={styles.topLine4Style}>
-                        <View style={{flexDirection: 'column', alignItems: 'center', flex: 1}}>
-                            <Text style={styles.valTxtStyle}>{yestodayProfit}</Text>
-                            <Text style={styles.valDescTxtStyle}>昨日收益(元)</Text>
-                        </View>
-                        <View style={{backgroundColor: Colors.splitLineColor, height: 20, width: 1}}/>
-                        <View style={{
-                            flexDirection: 'column',
-                            marginLeft: 1,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            flex: 1
-                        }}>
-                            <Text style={styles.valTxtStyle}>{amountProfits}</Text>
-                            <Text style={styles.valDescTxtStyle}>累计收益(元)</Text>
-                        </View>
-                    </View>
-                </View>
+            {this.renderTopView(userName, yestodayProfit, amountProfits, availableMoney, amountMoney, headerPic)}
             <View style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
@@ -155,6 +111,67 @@ export default class MineComponent extends Component {
         </ScrollView>
     }
 
+    renderTopView(userName, yestodayProfit, amountProfits, availableMoney, amountMoney, headerPic) {
+        if (this.props.isLogin) {
+            return <View style={styles.topViewStyle}>
+                <Image source={ConstantData.MINE_ACCOUNT_BACKGROUND} style={styles.topBgStyle}/>
+                <View>
+                    <View
+                        style={styles.topLine1Style}>
+                        <TouchableOpacity onPress={() => this._cameraAction()} activeOpacity={0.8}>
+                            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                <Image
+                                    // source={headerPic ? {uri: headerPic} :ConstantData.MINE_HEAD_DEFAULT}
+                                    source={this.props.avatarSource ? this.props.avatarSource : ConstantData.MINE_HEAD_DEFAULT}
+                                    resizeMode={'cover'}
+                                    style={styles.headImgStyle}/>
+                                <Text style={styles.nameTxtStyle}>{userName}</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <Image source={ConstantData.ICON_SETTING}
+                               style={{width: 24, height: 24}}/>
+                    </View>
+                    <View style={styles.topLine2Style}>
+                        <Text style={styles.amountTxtStyle}>{amountMoney}</Text>
+                        <Text style={styles.amountDescTxtStyle}>资产总额(元)</Text>
+                    </View>
+                    <View style={styles.topLine3Style}>
+                        <Text style={styles.valTxtStyle}>{availableMoney}</Text>
+                        <Text style={styles.valDescTxtStyle}>可用余额(元)</Text>
+                    </View>
+                </View>
+                <View style={styles.topLine4Style}>
+                    <View style={{flexDirection: 'column', alignItems: 'center', flex: 1}}>
+                        <Text style={styles.valTxtStyle}>{yestodayProfit}</Text>
+                        <Text style={styles.valDescTxtStyle}>昨日收益(元)</Text>
+                    </View>
+                    <View style={{backgroundColor: Colors.splitLineColor, height: 20, width: 1}}/>
+                    <View style={{
+                        flexDirection: 'column',
+                        marginLeft: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flex: 1
+                    }}>
+                        <Text style={styles.valTxtStyle}>{amountProfits}</Text>
+                        <Text style={styles.valDescTxtStyle}>累计收益(元)</Text>
+                    </View>
+                </View>
+            </View>
+        } else {
+            return <View style={styles.topViewStyle}>
+                <Image source={ConstantData.MINE_ACCOUNT_BACKGROUND} style={styles.topBgStyle}/>
+                <View style={styles.loginContainerStyle}>
+                    <Image
+                        source={ConstantData.MINE_HEAD_DEFAULT}
+                        resizeMode={'cover'}
+                        style={styles.headNoLoginImgStyle}/>
+                    <Text style={styles.loginTextStyle} onPress={()=>this.props.navigation.navigate('Login')}>点击登录/注册</Text>
+                </View>
+            </View>
+        }
+    }
+
     componentDidMount() {
         this.fetchNetData();
     }
@@ -163,7 +180,6 @@ export default class MineComponent extends Component {
         let {getNetAccountInfo} = this.props;
         getNetAccountInfo(this.props.accountInfo);
     }
-
 
     _onRefresh = () => {
         this.fetchNetData();
@@ -188,7 +204,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: Colors.white
     },
-    topViewStyle:{
+    topViewStyle: {
         flexDirection: 'column',
         justifyContent: 'space-between',
         width: SCREEN_WIDTH,
@@ -197,7 +213,7 @@ const styles = StyleSheet.create({
     topBgStyle: {
         width: SCREEN_WIDTH,
         height: SCREEN_HEIGHT / 2 - 100,
-        position:'absolute'
+        position: 'absolute'
     },
     topLine1Style: {
         flexDirection: 'row',
@@ -211,6 +227,11 @@ const styles = StyleSheet.create({
         width: 32,
         marginRight: 5,
         borderRadius: 16
+    },
+    headNoLoginImgStyle: {
+        height: 72,
+        width: 72,
+        borderRadius: 36
     },
     nameTxtStyle: {
         fontSize: 16,
@@ -262,4 +283,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'transparent',
     },
+
+    loginContainerStyle: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        marginTop: (SCREEN_HEIGHT / 2 - 100) / 3
+    },
+
+    loginTextStyle: {
+        fontSize: FONT_SIZE(18),
+        color: Colors.white,
+        marginTop:10
+    }
 });

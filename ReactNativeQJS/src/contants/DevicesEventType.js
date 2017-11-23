@@ -1,0 +1,3 @@
+
+//Event事件type
+export const LOGIN_SUCCESS_EVENT_TYPE='LOGIN_SUCCESS_EVENT_TYPE';
