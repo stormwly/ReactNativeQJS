@@ -14,7 +14,7 @@ import Immutable from 'immutable'
 import {toastShort} from '../common/ToastUtils'
 import SeparatorLine from '../component/SeparatorLine'
 
-export default class DiscoverContainer extends Component {
+export default class DiscoverPage extends Component {
     constructor(props) {
         super(props)
         this.state = {
