@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 import Colors from "../contants/Colors";
 
-export default class CompanyDesc extends Component {
+export default class CompanyDescComponent extends Component {
 
     render() {
         return (<View style={styles.container}>

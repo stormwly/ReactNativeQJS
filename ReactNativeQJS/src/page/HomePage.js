@@ -9,7 +9,7 @@ import {
 
 import HomeBannerContainer from '../container/HomeBannerContainer'
 import NoticeContainer from '../container/NoticeContainer'
-import CompanyDescContainer from '../container/CompanyDescContainer'
+import CompanyDescComponent from '../component/CompanyDescComponent'
 import {toastShort} from "../common/ToastUtils"
 import HomeListComponent from '../component/HomeListComponent'
 import {connect} from 'react-redux'
@@ -62,7 +62,7 @@ class HomePage extends Component {
             <View style={styles.topContainer}>
                 <HomeBannerContainer navigation={this.props.navigation}/>
                 <NoticeContainer navigation={this.props.navigation}/>
-                <CompanyDescContainer/>
+                <CompanyDescComponent/>
             </View>
             <View style={[styles.itemSeparatorStyle]}/>
             <HomeListComponent style={styles.customHomeList} {...this.props}/>
