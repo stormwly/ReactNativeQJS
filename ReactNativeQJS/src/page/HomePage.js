@@ -1,48 +1,127 @@
-//投资页面的逻辑
 import React, {Component} from 'react';
-import {connect} from 'react-redux'
-import HomeContentContainer from '../container/HomeContentContainer'
-import {BackHandler} from 'react-native'
-import {toastShort} from "../common/ToastUtils"
 
-let lastClickTime = 0;
+import {
+    View,
+    StyleSheet,
+    ScrollView,
+    RefreshControl,
+} from 'react-native';
+
+import HomeBannerContainer from '../container/HomeBannerContainer'
+import NoticeContainer from '../container/NoticeContainer'
+import CompanyDescContainer from '../container/CompanyDescContainer'
+import {toastShort} from "../common/ToastUtils"
+import HomeListComponent from '../component/HomeListComponent'
+import {connect} from 'react-redux'
+import * as HomeListAction from '../actions/HomeListAction'
 
 class HomePage extends Component {
+
+    componentWillMount() {
+        this.checkNetWork();
+    }
+
+    checkNetWork() {
+        IOS ?
+            NetUtils.listenerNetworkState(() => {
+                NetUtils.addEventListener(NetUtils.TAG_NETWORK_CHANGE, this.handleMethod);
+            })
+            :
+            NetUtils.listenerNetworkState((isConnected) => {
+                if (!isConnected) {
+                    toastShort(NetUtils.NOT_NETWORK);
+                }
+            });
+    }
+
     componentWillUnmount() {
-        BackHandler.addEventListener('hardwareBackPress', this._onBackAndroid);
+        NetUtils.removeEventListener(NetUtils.TAG_NETWORK_CHANGE, this.handleMethod);
     }
 
-    componentDidMount() {
-        BackHandler.addEventListener('hardwareBackPress', this._onBackAndroid);
-    }
-
-    _onBackAndroid = () => {
-        let {routes} = this.props;
-        var now = new Date().getTime();
-        if (routes && routes.length === 1) {
-            if (now - lastClickTime < 2500) {
-                return false;
-            } else {
-                toastShort('再点击一次退出应用');
-            }
-        } else {
-            if (routes.length > 1) {
-                this.props.navigation.goBack();
-                return true;
-            }
+    // 检测网络状态
+    handleMethod = (isConnected) => {
+        if (!isConnected) {
+            toastShort(NetUtils.NOT_NETWORK);
         }
-        lastClickTime = now;
-        return true;
-    }
+    };
 
     render() {
-        return (<HomeContentContainer {...this.props}/>);
+        return <ScrollView contentContainerStyle={styles.container}
+                           horizontal={false}
+                           showsVerticalScrollIndicator={false}
+                           refreshControl={
+                               <RefreshControl
+                                   refreshing={this.props.isRefreshing}
+                                   onRefresh={() => this._onRefresh()}
+                                   tintColor={Colors.red}
+                                   title="刷新中..."
+                                   titleColor={Colors.red}
+                                   colors={['#ff0000', '#00ff00', '#0000ff']}
+                                   progressBackgroundColor={Colors.white}/>
+                           }>
+            <View style={styles.topContainer}>
+                <HomeBannerContainer navigation={this.props.navigation}/>
+                <NoticeContainer navigation={this.props.navigation}/>
+                <CompanyDescContainer/>
+            </View>
+            <View style={[styles.itemSeparatorStyle]}/>
+            <HomeListComponent style={styles.customHomeList} {...this.props}/>
+        </ScrollView>
+    }
+
+    componentWillMount() {
+        let {getHomeList} = this.props;
+        getHomeList();
+    }
+
+    _onRefresh = () => {
+        let {getNetHomeList,financeList} = this.props;
+        getNetHomeList(financeList);
+    };
+
+
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    topContainer: {
+        flexDirection: 'column',
+        height: SCREEN_HEIGHT / 2,
+        backgroundColor:Colors.white
+    },
+    customHomeList: {
+        height: SCREEN_HEIGHT / 2,
+        width: SCREEN_WIDTH
+    },
+    itemSeparatorStyle: {
+        backgroundColor:'transparent',
+        height: 5,
+    },
+});
+
+const mapStateToProps = (state,ownProps) => {
+    let {navigation}=ownProps;
+    let {isLoading, financeList, errInfo,isRefreshing} = state.homeList;
+    return {
+        isLoading: isLoading,
+        financeList: financeList,
+        errInfo: errInfo,
+        isRefreshing:isRefreshing,
+        navigation:navigation
     }
 }
 
-export default connect((state) => {
-    const routes = state.nav.routes;
+const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        routes
+        getHomeList: () => {
+            dispatch(HomeListAction.getHomeList());
+        },
+        getNetHomeList: (financeList) => {
+            dispatch(HomeListAction.getNetHomeList(financeList));
+        }
     };
-})(HomePage)
+}
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage)
+
