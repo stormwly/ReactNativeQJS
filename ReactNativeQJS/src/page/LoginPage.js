@@ -1,11 +1,13 @@
 import React, {Component} from 'react'
+import * as DevicesEventType from '../contants/DevicesEventType'
 import {
     View,
     StyleSheet,
     Image,
     BackHandler,
     Text,
-    Keyboard
+    Keyboard,
+    DeviceEventEmitter
 } from 'react-native'
 import {connect} from 'react-redux'
 import * as LoginAction from '../actions/LoginAction'
@@ -68,9 +70,9 @@ class LoginPage extends Component {
         isShowLoginPassWord(!this.props.isShowPwd)
     }
 
-
     componentDidUpdate() {
         if (this.props.userData) {
+            DeviceEventEmitter.emit(DevicesEventType.LOGIN_SUCCESS_EVENT_TYPE,this.props.userData);
             this.props.navigation.goBack();
         }
     }

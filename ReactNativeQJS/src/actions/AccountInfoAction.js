@@ -5,7 +5,9 @@ import {toastShort} from "../common/ToastUtils"
 export const getNetAccountInfo = (accountInfo) => {
     return dispatch => {
         dispatch(getAccountInfoStart(accountInfo))
-        HttpUtils.get(HttpConfigs.api.getAccountInfo).then(response => {
+        HttpUtils.get(HttpConfigs.api.getAccountInfo,{
+            token:GLOBAL.UserToken
+        }).then(response => {
                 //请求成功
                 if (response) {
                     if (response.code === 0) {
