@@ -7,8 +7,8 @@ import {
     RefreshControl,
 } from 'react-native';
 
-import HomeBannerContainer from '../container/HomeBannerContainer'
-import NoticeContainer from '../container/NoticeContainer'
+import HomeBannerComponent from '../component/HomeBannerComponent'
+import NoticeComponent from '../component/NoticeComponent'
 import CompanyDescComponent from '../component/CompanyDescComponent'
 import {toastShort} from "../common/ToastUtils"
 import HomeListComponent from '../component/HomeListComponent'
@@ -60,8 +60,8 @@ class HomePage extends Component {
                                    progressBackgroundColor={Colors.white}/>
                            }>
             <View style={styles.topContainer}>
-                <HomeBannerContainer navigation={this.props.navigation}/>
-                <NoticeContainer navigation={this.props.navigation}/>
+                <HomeBannerComponent navigation={this.props.navigation}/>
+                <NoticeComponent navigation={this.props.navigation}/>
                 <CompanyDescComponent/>
             </View>
             <View style={[styles.itemSeparatorStyle]}/>

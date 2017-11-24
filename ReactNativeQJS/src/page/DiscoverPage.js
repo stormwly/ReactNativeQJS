@@ -8,7 +8,7 @@ import {
     ScrollView,
     RefreshControl,
 } from 'react-native';
-import HomeBannerContainer from '../container/HomeBannerContainer'
+import HomeBannerComponent from '../component/HomeBannerComponent'
 import DiscoverGridView from '../component/DiscoverGridView'
 import Immutable from 'immutable'
 import {toastShort} from '../common/ToastUtils'
@@ -37,7 +37,7 @@ export default class DiscoverPage extends Component {
                                    colors={['#ff0000', '#00ff00', '#0000ff']}
                                    progressBackgroundColor={Colors.white}/>
                            }>
-            <HomeBannerContainer style={styles.bannerStyle}/>
+            <HomeBannerComponent style={styles.bannerStyle}/>
             <DiscoverGridView items={this.state.items} onGridSelected={this.onGridSelected}/>
             {SeparatorLine()}
             <View style={styles.layoutStyle}>

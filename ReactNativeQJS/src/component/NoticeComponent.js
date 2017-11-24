@@ -5,7 +5,9 @@ import {
     Text,
     View
 } from 'react-native'
-export default class NoticeComponent extends Component {
+import {connect} from 'react-redux'
+import * as HomeNoticeAction from '../actions/HomeNoticeAction'
+ class NoticeComponent extends Component {
     render() {
         let {noticeContent} = this.props;
         let textView = noticeContent ? <Text style={styles.text}>{noticeContent}</Text> : null;
@@ -45,3 +47,24 @@ const styles = StyleSheet.create({
         color: Colors.headTitleColor
     }
 })
+
+const mapStateToProps = (state) => {
+    let {noticeContent,errInfo}=state.notice;
+    return {
+        noticeContent:noticeContent,
+        errInfo: errInfo
+    }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        getHomeNotice: () => {
+            dispatch(HomeNoticeAction.getHomeNotice());
+        },
+        clearTime:()=>{
+            HomeNoticeAction.clearTime();
+        }
+    };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(NoticeComponent)
+

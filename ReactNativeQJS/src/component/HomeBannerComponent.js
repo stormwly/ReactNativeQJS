@@ -6,10 +6,12 @@ import {
     StyleSheet,
     TouchableOpacity
 } from 'react-native';
+import {connect} from 'react-redux'
+import * as HomeBannerAction from '../actions/HomeBannerAction'
 import Swiper from 'react-native-swiper';
 import ConstantData from "../contants/ConstantData";
 
-export default class HomeBannerComponent extends Component {
+class HomeBannerComponent extends Component {
 
     render() {
         const {bannerList} = this.props;
@@ -85,3 +87,21 @@ const styles = StyleSheet.create({
         borderRadius: 3
     },
 })
+
+const mapStateToProps = (state) => {
+    let {bannerList, errInfo} = state.homeBanner;
+    return {
+        bannerList: bannerList,
+        errInfo: errInfo,
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getHomeBanner: () => {
+            dispatch(HomeBannerAction.getHomeBanner());
+        }
+    };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(HomeBannerComponent)
+
