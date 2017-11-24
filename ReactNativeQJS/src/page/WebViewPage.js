@@ -21,7 +21,7 @@ var inputText = null;
  class WebViewPage extends Component {
 
     componentWillUnmount() {
-        BackHandler.addEventListener('hardwareBackPress', this._onBackAndroid);
+        BackHandler.removeEventListener('hardwareBackPress', this._onBackAndroid);
     }
 
     _onBackAndroid = () => {

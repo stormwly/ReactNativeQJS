@@ -141,15 +141,16 @@ class MinePage extends Component {
                         <TouchableOpacity onPress={() => this._cameraAction()} activeOpacity={0.8}>
                             <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                 <Image
-                                    // source={headerPic ? {uri: headerPic} :ConstantData.MINE_HEAD_DEFAULT}
                                     source={this.props.avatarSource ? this.props.avatarSource : ConstantData.MINE_HEAD_DEFAULT}
                                     resizeMode={'cover'}
                                     style={styles.headImgStyle}/>
                                 <Text style={styles.nameTxtStyle}>{userName}</Text>
                             </View>
                         </TouchableOpacity>
+                        <TouchableOpacity activeOpacity={0.8} onPress={()=>this.props.navigation.navigate('Setting',{title:'设置'})}>
                         <Image source={ConstantData.ICON_SETTING}
                                style={{width: 24, height: 24}}/>
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.topLine2Style}>
                         <Text style={styles.amountTxtStyle}>{amountMoney}</Text>

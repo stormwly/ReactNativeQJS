@@ -91,7 +91,6 @@ class PreviousFinancePage extends PureComponent {
                 <Text style={styles.footerTextStyle}>{this.props.errInfo}?出错了:没有更多数据了!</Text>
             </View>
         }
-
     }
 
     onPressItem(item) {
