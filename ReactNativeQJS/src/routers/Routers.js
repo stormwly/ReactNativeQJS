@@ -19,6 +19,8 @@ import PreviousFinancePage from '../page/PreviousFinancePage'
 import LoginPage from '../page/LoginPage'
 import LoginSettingPage from '../page/LoginSettingPage'
 import SettingPage from '../page/SettingPage'
+import RegisterPage from '../page/RegisterPage'
+import SetLoginPwdPage from '../page/SetLoginPwdPage'
 import LoginOptions from "./LoginOptions";
 
 //底部导航相关
@@ -117,6 +119,16 @@ export default RouteConfigs = StackNavigator({
 
     LoginSetting: {
         screen: LoginSettingPage,
+        navigationOptions: ({navigation}) => StackOptions({navigation})
+    },
+
+    Register: {
+        screen: RegisterPage,
+        navigationOptions: ({navigation}) => StackOptions({navigation})
+    },
+
+    SetLoginPwd: {
+        screen: SetLoginPwdPage,
         navigationOptions: ({navigation}) => StackOptions({navigation})
     },
 

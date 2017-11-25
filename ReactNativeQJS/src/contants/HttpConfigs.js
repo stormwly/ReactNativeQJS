@@ -11,6 +11,7 @@
         getAccountInfo:'user/getAccountInfo',//获取用户账户中心数据
         home_getNotices:'home/getNotices',//获取首页中的最新公告
         user_login:'user/login',//登录
+        user_setLoginPwd:'user/setLoginPwd',//设置登录密码
     },
 
     //基础请求参数

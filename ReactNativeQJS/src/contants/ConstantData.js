@@ -53,9 +53,11 @@ export default{
     ICON_OPEN_PASS_LOGIN:require('../../res/images/icon_openpass_login.png'),
     ICON_CLOSE_PASS_LOGIN:require('../../res/images/icon_closepass_login.png'),
     ICON_SETTING_LOGIN:require('../../res/images/icon_setting_login.png'),
+    ICON_LOGIN_PHONE:require('../../res/images/icon_login_phone.png'),
 
     //公用
     ICON_RIGHT_ARROW:require('../../res/images/icon_right_arrow.png'),
+    ICON_FORGET_MESSAGE_CODE:require('../../res/images/icon_forget_message_code.png'),
 
 }
 

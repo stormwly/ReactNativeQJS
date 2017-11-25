@@ -1,24 +1,22 @@
 import React, {Component} from 'react'
-import * as DevicesEventType from '../contants/DevicesEventType'
 import {
     View,
     StyleSheet,
     Image,
     BackHandler,
     Text,
+    TextInput,
     Keyboard,
-    DeviceEventEmitter
 } from 'react-native'
 import {connect} from 'react-redux'
-import Communications from 'react-native-communications'
-import * as LoginAction from '../actions/LoginAction'
+import * as SetLoginPwdAction from '../actions/SetLoginPwdAction'
 import * as TextUtils from '../common/TextUtils'
 import {toastShort} from "../common/ToastUtils"
 import CustomTextInput from '../component/CustomTextInput'
 import Button from 'react-native-button'
 import LoadingView from '../component/LoadingView'
 
-class LoginPage extends Component {
+class SetLoginPwdPage extends Component {
     componentWillMount() {
         BackHandler.addEventListener('hardwareBackPress', this._onBackAndroid);
         this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
@@ -29,6 +27,8 @@ class LoginPage extends Component {
         BackHandler.removeEventListener('hardwareBackPress', this._onBackAndroid);
         this.keyboardDidShowListener.remove();
         this.keyboardDidHideListener.remove();
+        this.interval && clearInterval(this.interval);
+        this.props.navigation.dispatch(SetLoginPwdAction.setMessageCodeTxt('获取验证码'));
     }
 
     _keyboardDidShow() {
@@ -45,17 +45,6 @@ class LoginPage extends Component {
         return true;
     }
 
-    componentDidMount() {
-        this.props.navigation.setParams({
-            headerRightClick: this._headerRightClick,
-        });
-    }
-
-    _headerRightClick = () => {
-        Keyboard.dismiss();
-        this.props.navigation.navigate('LoginSetting', {title: '设置'});
-    }
-
 //验证手机号只能输入数字
     validPhoneInput = (text) => {
         let {getValidPhone} = this.props;
@@ -68,15 +57,11 @@ class LoginPage extends Component {
         getValidPwd(text)
     }
 
-    loginPress = () => {
+    summit = () => {
         Keyboard.dismiss();
-        let {login} = this.props;
-        login(this.props.validPhone, this.props.validPwd);
-    }
-
-    gotoRegister = () => {
-        Keyboard.dismiss();
-        this.props.navigation.navigate('Register', {title: '注册'});
+        let messageCode = this.refs['messageCodeRef']._lastNativeText;
+        let {summit} = this.props;
+        summit(this.props.validPhone, this.props.validPwd, messageCode);
     }
 
     isShowLoginPassWord = () => {
@@ -85,16 +70,26 @@ class LoginPage extends Component {
     }
 
     componentDidUpdate() {
-        if (this.props.userData) {
-            DeviceEventEmitter.emit(DevicesEventType.LOGIN_SUCCESS_EVENT_TYPE, this.props.userData);
+        if (this.props.success) {
             this.props.navigation.goBack();
         }
     }
 
+    timeCountDown = () => {
+        let time = 60;
+        this.interval = setInterval(() => {
+            if (time < 1) {
+                this.props.navigation.dispatch(SetLoginPwdAction.setMessageCodeTxt('重新获取'));
+                this.interval && clearInterval(this.interval)
+            } else {
+                this.props.navigation.dispatch(SetLoginPwdAction.setMessageCodeTxt(time + 's'));
+                time--;
+            }
+        }, 1000);
+    }
 
     render() {
         return <View style={styles.container}>
-            <Image style={styles.logoStyle} source={ConstantData.ICON_LOGIN_LOGO} resizeMode={'cover'}/>
             <CustomTextInput
                 keyboardType="phone-pad"
                 onChangeText={(text) => this.validPhoneInput(text)}
@@ -106,6 +101,23 @@ class LoginPage extends Component {
                 maxLength={11}
                 value={this.props.validPhone}
                 placeholderText="请输入手机号码"/>
+            <View style={styles.messageCodeContainerStyle}>
+                <View style={{flexDirection: 'row', flex: 1}}>
+                    <Image style={styles.messageCodeIconStyle}
+                           resizeMode={'center'}
+                           source={ConstantData.ICON_FORGET_MESSAGE_CODE}/>
+                    <TextInput style={styles.messageCodeInputStyle}
+                               placeholderTextColor={Colors.textColorHint}
+                               ref='messageCodeRef'
+                               maxLength={4}
+                               keyboardType="numeric"
+                               placeholder='请输入短信验证码'
+                               underlineColorAndroid={'transparent'}
+                               clearButtonMode={'while-editing'}/>
+                </View>
+                <Text style={styles.countDownTextStyle}
+                      onPress={() => this.timeCountDown()}>{this.props.messageCodeTxt}</Text>
+            </View>
             <CustomTextInput
                 keyboardType="numeric"
                 onChangeText={(text) => this.validPassWordInput(text)}
@@ -122,25 +134,13 @@ class LoginPage extends Component {
                 maxLength={18}
                 value={this.props.validPwd}
                 placeholderText="请输入密码6-18位"/>
-            <Text onPress={()=>this.props.navigation.navigate('SetLoginPwd',{title:'设置新密码'})} style={styles.forgetPwdStyle} >忘记密码?</Text>
             <Button
-                onPress={() => this.loginPress()}
+                onPress={() => this.summit()}
                 activeOpacity={0.8}
-                containerStyle={styles.buttonLoginContainerStyle}
-                style={styles.buttonLoginTextStyle}>
-                登录
+                containerStyle={styles.buttonSummitContainerStyle}
+                style={styles.buttonSummitTextStyle}>
+                确定
             </Button>
-            <Button
-                onPress={() => this.gotoRegister()}
-                activeOpacity={0.8}
-                containerStyle={styles.buttonRegisterContainerStyle}
-                style={styles.buttonRegisterTextStyle}>
-                新用户注册,立领超值大礼包
-            </Button>
-            <View style={styles.bottomStyle}>
-                <Image source={ConstantData.ICON_LOGIN_PHONE} style={styles.bottomPhoneIconStyle} resizeMode={'center'}/>
-                <Text style={styles.bottomPhoneTextStyle} onPress={()=>Communications.phonecall(ConstantData.SERVICE_PHONE, true)}>{ConstantData.SERVICE_PHONE}</Text>
-            </View>
             <LoadingView isOpen={this.props.isLoading}/>
         </View>
     }
@@ -151,7 +151,8 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         backgroundColor: Colors.white,
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 3
     },
     logoStyle: {
         marginTop: 50,
@@ -160,7 +161,7 @@ const styles = StyleSheet.create({
         height: 50
     },
     containerStyle: {
-        marginTop: 10
+        marginTop: 5
     },
     textInputStyle: {
         marginTop: 5
@@ -171,18 +172,11 @@ const styles = StyleSheet.create({
     iconRightStyle: {
         marginRight: 10
     },
-    forgetPwdStyle: {
-        fontSize: FONT_SIZE(12),
-        color: Colors.headTitleColor,
-        marginRight: 10,
-        marginTop: 10,
-        alignSelf: 'flex-end',
-    },
-    buttonLoginTextStyle: {
+    buttonSummitTextStyle: {
         color: Colors.white,
         fontSize: FONT_SIZE(12),
     },
-    buttonLoginContainerStyle: {
+    buttonSummitContainerStyle: {
         width: SCREEN_WIDTH - 20,
         padding: 10,
         overflow: 'hidden',
@@ -191,73 +185,69 @@ const styles = StyleSheet.create({
         marginTop: 10,
         backgroundColor: Colors.red
     },
-
-    buttonRegisterTextStyle: {
-        color: Colors.red,
-        fontSize:FONT_SIZE(12),
-    },
-    buttonRegisterContainerStyle: {
-        width: SCREEN_WIDTH - 20,
-        padding: 10,
-        overflow: 'hidden',
-        borderRadius: 4,
-        marginTop: 20,
-        borderColor: Colors.red,
-        borderWidth: 1,
-        backgroundColor: Colors.white
-    },
-    bottomStyle: {
-        marginTop:40,
-        alignItems:'center',
+    messageCodeContainerStyle: {
         flexDirection: 'row',
-        justifyContent: 'center'
+        borderBottomColor: Colors.bottomColor,
+        borderBottomWidth: 0.5,
+        alignItems: 'center',
+        width: SCREEN_WIDTH - 30,
+        justifyContent: 'space-between',
     },
-    bottomPhoneIconStyle: {
-        width: 12,
-        height: 12
+    messageCodeInputStyle: {
+        color: Colors.textColor,
+        fontSize: FONT_SIZE(14),
+        marginLeft: 5,
+        flex: 1
     },
-    bottomPhoneTextStyle: {
-        fontSize:FONT_SIZE(10),
-        color:Colors.red,
-        marginLeft:3
+    messageCodeIconStyle: {
+        alignSelf: 'center',
+        height: 32,
+        width: 25,
+    },
+    countDownTextStyle: {
+        fontSize: FONT_SIZE(12),
+        color: Colors.red
     }
 })
 
 const mapStateToProps = (state) => {
-    let {validPhone, validPwd, isShowPwd, userData, errInfo, isLoading} = state.login;
+    let {validPhone, validPwd, isShowPwd, messageCodeTxt, errInfo, isLoading,success} = state.setLoginPwd;
     return {
-        userData: userData,
+        messageCodeTxt,
         errInfo: errInfo,
         isLoading: isLoading,
         validPhone,
         validPwd,
         isShowPwd,
+        success
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        login: (phone, password) => {
+        summit: (phone, password, messageCode) => {
             if (!TextUtils.isPhoneNumber(phone)) {
                 toastShort('请输入正确的手机号码!')
+            } else if (messageCode===undefined||messageCode.length!=4) {
+                toastShort('请输入正确的验证码!')
             } else if (!TextUtils.isLoginPwd(password)) {
                 toastShort('请输入6-18位的密码!')
             } else {
-                dispatch(LoginAction.login(phone, password));
+                dispatch(SetLoginPwdAction.summit(phone, password, messageCode));
             }
         },
         getValidPhone: (inputPhone) => {
             let validPhone = inputPhone.replace(/\D/g, '');
-            dispatch(LoginAction.getValidPhone(validPhone))
+            dispatch(SetLoginPwdAction.getValidPhone(validPhone))
         },
         getValidPwd: (inputPwd) => {
             let validPwd = inputPwd.replace(/[^\a-\z\A-\Z0-9\_]/g, '');//只能输入数字和字母以及下划线
-            dispatch(LoginAction.getValidPwd(validPwd))
+            dispatch(SetLoginPwdAction.getValidPwd(validPwd))
         },
         isShowLoginPassWord: (isShowPwd) => {
-            dispatch(LoginAction.isShowLoginPassWord(isShowPwd))
+            dispatch(SetLoginPwdAction.isShowForgetPassWord(isShowPwd))
         }
     };
 }
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage)
+export default connect(mapStateToProps, mapDispatchToProps)(SetLoginPwdPage)
 

@@ -6,6 +6,7 @@ import financeList from './financeListReducers'
 import previousFinanceList from './previousFinanceListReducers'
 import account from './accountInfoReducers'
 import login from './loginReducers'
+import setLoginPwd from './setLoginPwdReducers'
 
 const reducers = {
     nav,
@@ -15,7 +16,8 @@ const reducers = {
     financeList,
     previousFinanceList,
     account,
-    login
+    login,
+    setLoginPwd
 }
 
 export default reducers;

@@ -11,8 +11,6 @@ import {
     TouchableOpacity,
 } from 'react-native'
 import Button from 'react-native-button'
-import AlertModal from '../component/AlertModal'
-import RepositoryUtils from '../common/storage/RepositoryUtils'
 import Communications from 'react-native-communications'
 
 var {NativeModules} = require('react-native');
