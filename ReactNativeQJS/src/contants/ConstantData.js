@@ -54,6 +54,8 @@ export default{
     ICON_CLOSE_PASS_LOGIN:require('../../res/images/icon_closepass_login.png'),
     ICON_SETTING_LOGIN:require('../../res/images/icon_setting_login.png'),
 
+    //公用
+    ICON_RIGHT_ARROW:require('../../res/images/icon_right_arrow.png'),
 
 }
 
