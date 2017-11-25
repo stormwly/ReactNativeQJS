@@ -7,11 +7,13 @@ import {
     BackHandler,
     SectionList,
     Image,
-    StatusBar
+    StatusBar,
+    TouchableOpacity,
 } from 'react-native'
 import Button from 'react-native-button'
 import AlertModal from '../component/AlertModal'
 import RepositoryUtils from '../common/storage/RepositoryUtils'
+import Communications from 'react-native-communications'
 
 var {NativeModules} = require('react-native');
 var {getVersionName} = NativeModules.PackageInfo;
@@ -62,16 +64,21 @@ export default class SettingPage extends PureComponent {
                 message='确定是否退出登录?'
                 rightButtonText='确定'
                 leftButtonText='取消'
-                onRightClick={()=>this._loginOut()}
-                onLeftClick={()=>this.AlertModal.hide()}/>
-            <StatusBar backgroundColor={Colors.transparent} />
+                onRightClick={() => this._loginOut()}
+                onLeftClick={() => this.AlertModal.hide()}/>
+            <StatusBar backgroundColor={Colors.transparent}/>
         </View>)
     }
 
     _renderItem = (info) => {
+        let phoneView = info.item.index === 6 ? <TouchableOpacity activeOpacity={0.8} onPress={() => Communications.phonecall(ConstantData.SERVICE_PHONE, true)}><Text
+            style={styles.phoneTextStyle}>{ConstantData.SERVICE_PHONE}</Text></TouchableOpacity> : null;
         return <View style={styles.itemStyle} key={info.item.index}>
             <Text style={styles.itemTextStyle}>{info.item.title}</Text>
-            <Image source={ConstantData.ICON_RIGHT_ARROW} style={{height:18,width:18}} resizeMode={'cover'}/>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                {phoneView}
+                <Image source={ConstantData.ICON_RIGHT_ARROW} style={{height: 18, width: 18}} resizeMode={'cover'}/>
+            </View>
         </View>
     }
 
@@ -86,7 +93,7 @@ export default class SettingPage extends PureComponent {
     _loginOut = () => {
         this.AlertModal.hide();
         RepositoryUtils.init().removeCacheDataByKey(StorageKeys.userToken);
-        GLOBAL.UserToken=null;
+        GLOBAL.UserToken = null;
         this.props.navigation.goBack();
         this.props.navigation.navigate('Home');
     }
@@ -128,15 +135,15 @@ const styles = StyleSheet.create({
     itemStyle: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent:'space-between',
+        justifyContent: 'space-between',
         height: 60,
-        backgroundColor:Colors.white,
-        paddingLeft:10,
-        paddingRight:10
+        backgroundColor: Colors.white,
+        paddingLeft: 10,
+        paddingRight: 10
     },
     itemTextStyle: {
         textAlignVertical: 'center',
-        backgroundColor: "#ffffff",
+        backgroundColor: Colors.white,
         color: Colors.itemDescColor,
         fontSize: FONT_SIZE(12)
     },
@@ -162,4 +169,9 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.splitLineColor,
         height: 1
     },
+    phoneTextStyle: {
+        fontSize: FONT_SIZE(12),
+        color: Colors.itemDescColor,
+        marginRight: 3
+    }
 })
