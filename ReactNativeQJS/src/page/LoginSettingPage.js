@@ -19,18 +19,17 @@ var {NativeModules} = require('react-native');
 var {getVersionName} = NativeModules.PackageInfo;
 var appVersion;
 var sections = [
-    {sectionIndex: 0, key: "A", data: [{index: 0, title: "账户安全"}]},
     {
-        sectionIndex: 1,
         key: "B",
-        data: [{index: 1, title: "意见反馈"}, {index: 2, title: "平台介绍"},{
-            index:3,
+        data: [{index: 1, title: "意见反馈"}, {index: 2, title: "平台介绍"}, {
+            index: 3,
             title: "帮助中心"
-        }, {index:4, title: "在线客户"}, {index:5, title: "客户电话"}]
+        },{index: 4, title: "客户电话"}]
     },
 ];
-export default class SettingPage extends PureComponent {
+export default class LoginSettingPage extends PureComponent {
     componentWillMount() {
+        BackHandler.addEventListener('hardwareBackPress', this._onBackAndroid);
         getVersionName((versionName) => {
             appVersion = versionName;
         })
@@ -45,7 +44,6 @@ export default class SettingPage extends PureComponent {
     }
 
     componentDidMount() {
-        BackHandler.addEventListener('hardwareBackPress', this._onBackAndroid);
         this.props.navigation.setParams({
             title: this.props.navigation.state.params.title,
         });
@@ -54,26 +52,17 @@ export default class SettingPage extends PureComponent {
     render() {
         return (<View style={styles.container}>
             <SectionList
-                renderSectionHeader={this._sectionHeader}
                 renderItem={this._renderItem}
                 sections={sections}
                 keyExtractor={(item, index) => item.index}
                 ItemSeparatorComponent={() => this.SeparatorLine()}
-                ListFooterComponent={this.ListFootComponent()}
-            />
-            <AlertModal
-                ref={AlertModal => this.AlertModal = AlertModal}
-                message='确定是否退出登录?'
-                rightButtonText='确定'
-                leftButtonText='取消'
-                onRightClick={() => this._loginOut()}
-                onLeftClick={() => this.AlertModal.hide()}/>
+                ListFooterComponent={this.ListFootComponent()}/>
             <StatusBar backgroundColor={Colors.transparent}/>
         </View>)
     }
 
     _renderItem = (info) => {
-        let phoneView = info.item.index ===5 ? <TouchableOpacity activeOpacity={0.8} onPress={() => Communications.phonecall(ConstantData.SERVICE_PHONE, true)}><Text
+        let phoneView = info.item.index ===4? <TouchableOpacity activeOpacity={0.8} onPress={() => Communications.phonecall(ConstantData.SERVICE_PHONE, true)}><Text
             style={styles.phoneTextStyle}>{ConstantData.SERVICE_PHONE}</Text></TouchableOpacity> : null;
         return <View style={styles.itemStyle} key={info.item.index}>
             <Text style={styles.itemTextStyle}>{info.item.title}</Text>
@@ -84,31 +73,19 @@ export default class SettingPage extends PureComponent {
         </View>
     }
 
-    _sectionHeader = ({section}) => {
-        return <View key={section.sectionIndex} style={styles.sectionHeaderStyle}/>
-    }
-
-    _showLoginOutAlert = () => {
-        this.AlertModal.show();
-    }
-
-    _loginOut = () => {
-        this.AlertModal.hide();
-        RepositoryUtils.init().removeCacheDataByKey(StorageKeys.userToken);
-        GLOBAL.UserToken = null;
+    login = () => {
         this.props.navigation.goBack();
-        this.props.navigation.navigate('Home');
     }
 
     //列表的foot组件
     ListFootComponent() {
         return <View style={styles.footerStyle}>
             <Button
-                onPress={() => this._showLoginOutAlert()}
+                onPress={() => this.login()}
                 activeOpacity={0.8}
                 containerStyle={styles.buttonContainerStyle}
                 style={styles.buttonTextStyle}>
-                安全退出
+                登录
             </Button>
             <Text style={styles.logoutTextStyle}>当前版本:{appVersion}</Text>
         </View>

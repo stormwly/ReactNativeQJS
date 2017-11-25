@@ -18,13 +18,11 @@ import Button from 'react-native-button'
 import LoadingView from '../component/LoadingView'
 
 class LoginPage extends Component {
-
     componentWillMount() {
         BackHandler.addEventListener('hardwareBackPress', this._onBackAndroid);
         this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
     }
-
 
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this._onBackAndroid);
@@ -46,6 +44,16 @@ class LoginPage extends Component {
         return true;
     }
 
+    componentDidMount() {
+        this.props.navigation.setParams({
+            headerRightClick:this._headerRightClick,
+        });
+    }
+
+    _headerRightClick=()=>{
+        Keyboard.dismiss();
+        this.props.navigation.navigate('LoginSetting',{title:'设置'});
+    }
 
 //验证手机号只能输入数字
     validPhoneInput = (text) => {

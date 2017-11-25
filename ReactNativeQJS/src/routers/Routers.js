@@ -17,6 +17,7 @@ import MinePage from '../page/MinePage'
 import WebViewPage from '../page/WebViewPage'
 import PreviousFinancePage from '../page/PreviousFinancePage'
 import LoginPage from '../page/LoginPage'
+import LoginSettingPage from '../page/LoginSettingPage'
 import SettingPage from '../page/SettingPage'
 import LoginOptions from "./LoginOptions";
 
@@ -111,6 +112,11 @@ export default RouteConfigs = StackNavigator({
 
     Setting: {
         screen: SettingPage,
+        navigationOptions: ({navigation}) => StackOptions({navigation})
+    },
+
+    LoginSetting: {
+        screen: LoginSettingPage,
         navigationOptions: ({navigation}) => StackOptions({navigation})
     },
 
