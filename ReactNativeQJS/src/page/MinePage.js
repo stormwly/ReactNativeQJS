@@ -33,7 +33,7 @@ var photoOptions = {
         path: 'images'
     }
 }
-
+var navigation;
 class MinePage extends Component {
     render() {
         let {accountInfo} = this.props;
@@ -199,6 +199,8 @@ class MinePage extends Component {
             this.fetchNetData();
         })
         this.fetchNetData();
+        console.log('componentDidMount---->',this.props);
+        navigation=this.props.navigation;
     }
 
     componentWillUnmount() {
@@ -225,7 +227,14 @@ class MinePage extends Component {
 
 
     onGridSelected(item) {
-        // alert(item.title)
+        if(UserManager.isLogin()){
+            if(item.title==='我的邀请'){
+                navigation.navigate('MyInvest',{title:'我的邀请'});
+            }
+        }else {
+            toastShort('您还未登录!')
+        }
+
     }
 }
 

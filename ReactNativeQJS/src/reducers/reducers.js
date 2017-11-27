@@ -8,6 +8,7 @@ import account from './accountInfoReducers'
 import login from './loginReducers'
 import setLoginPwd from './setLoginPwdReducers'
 import register from './registerReducers'
+import myInvestInfo from './myInvestInfoReducers'
 
 const reducers = {
     nav,
@@ -19,7 +20,8 @@ const reducers = {
     account,
     login,
     setLoginPwd,
-    register
+    register,
+    myInvestInfo
 }
 
 export default reducers;

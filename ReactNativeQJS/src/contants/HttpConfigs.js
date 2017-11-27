@@ -3,7 +3,6 @@
  let HttpConfigs= {
     api: {
         baseUrl: 'http://rapapi.org/mockjs/26579/',
-
         home_banner: 'home/getBanner',//首页中的获取banner接口
         home_finance_list:'home/getFinanceList',
         invest_list:'finance/getFinanceList',//获取理财列表中的数据
@@ -12,6 +11,7 @@
         home_getNotices:'home/getNotices',//获取首页中的最新公告
         user_login:'user/login',//登录
         user_setLoginPwd:'user/setLoginPwd',//设置登录密码
+        getMyInvestInfo:'user/getMyInvestInfo',//我的邀请
     },
 
     //基础请求参数

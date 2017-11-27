@@ -58,6 +58,7 @@ export default{
     //公用
     ICON_RIGHT_ARROW:require('../../res/images/icon_right_arrow.png'),
     ICON_FORGET_MESSAGE_CODE:require('../../res/images/icon_forget_message_code.png'),
+    ICON_WALLET:require('../../res/images/icon_qianbao.png'),
 
 }
 

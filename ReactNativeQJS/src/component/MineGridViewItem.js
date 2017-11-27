@@ -10,7 +10,6 @@ import {
 export default class MineGridItem extends Component {
     render() {
         let item = this.props.item
-
         let title = item.title
         let num =this.props.index===4?this.props.investNums:0;
         let icon = item.icon

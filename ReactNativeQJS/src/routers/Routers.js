@@ -21,6 +21,7 @@ import LoginSettingPage from '../page/LoginSettingPage'
 import SettingPage from '../page/SettingPage'
 import RegisterPage from '../page/RegisterPage'
 import SetLoginPwdPage from '../page/SetLoginPwdPage'
+import MyInvestPage from '../page/MyInvestPage'
 import LoginOptions from "./LoginOptions";
 
 //底部导航相关
@@ -129,6 +130,11 @@ export default RouteConfigs = StackNavigator({
 
     SetLoginPwd: {
         screen: SetLoginPwdPage,
+        navigationOptions: ({navigation}) => StackOptions({navigation})
+    },
+
+    MyInvest: {
+        screen: MyInvestPage,
         navigationOptions: ({navigation}) => StackOptions({navigation})
     },
 
