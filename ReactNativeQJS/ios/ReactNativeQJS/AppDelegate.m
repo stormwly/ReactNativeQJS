@@ -12,13 +12,21 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import "SplashScreen.h"
+#import "RCTHotUpdate.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   NSURL *jsCodeLocation;
+  
+#if DEBUG
+  // 原来的jsCodeLocation
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+  NSLog(@"jsCodeLocation path is %@",jsCodeLocation);
+#else
+  jsCodeLocation=[RCTHotUpdate bundleURL];
+#endif
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                moduleName:@"ReactNativeQJS"
                                                initialProperties:nil

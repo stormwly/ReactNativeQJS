@@ -1,8 +1,13 @@
 package com.reactnativeqjs;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+
+import cn.reactnative.modules.update.UpdateContext;
+import cn.reactnative.modules.update.UpdatePackage;
+
 import com.imagepicker.ImagePickerPackage;
 
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
@@ -28,6 +33,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+                    new UpdatePackage(),
                     new ImagePickerPackage(),
                     new SplashScreenReactPackage(),
                     new PackageInfoReactPackage()
@@ -36,6 +42,7 @@ public class MainApplication extends Application implements ReactApplication {
 
         @Override
         protected String getJSMainModuleName() {
+//            Log.e("jsPath-->", UpdateContext.getBundleUrl(MainApplication.this));
             return "index";
         }
     };
