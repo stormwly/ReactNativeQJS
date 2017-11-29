@@ -21,6 +21,8 @@ import com.reactnativeqjs.custom.packageInfo.PackageInfoReactPackage;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 public class MainApplication extends Application implements ReactApplication {
 
     private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -40,9 +42,19 @@ public class MainApplication extends Application implements ReactApplication {
             );
         }
 
+        @Nullable
+        @Override
+        protected String getJSBundleFile() {
+            if(super.getJSBundleFile()!=null){
+                Log.e("jsPath000000-->",super.getJSBundleFile());
+            }
+//            Log.e("jsPath111-->", UpdateContext.getBundleUrl(MainApplication.this));
+
+            return  UpdateContext.getBundleUrl(MainApplication.this);
+        }
+
         @Override
         protected String getJSMainModuleName() {
-//            Log.e("jsPath-->", UpdateContext.getBundleUrl(MainApplication.this));
             return "index";
         }
     };
